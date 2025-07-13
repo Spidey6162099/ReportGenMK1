@@ -20,7 +20,7 @@ import java.util.Objects;
 public class APICaller {
     private RestClient restClient=RestClient.create();
     private String query1="report on topic ";
-    private String query2=" consider pagewise word document,in detail and do not start with created by etc.,return in an easily parseable json format,with pagewise distinction but detailed content,also break a page into subsections for better clarity, at highest level name of the project i.e title field etc. then a json array of pages , within each page should be a title field which should contain topic number not page number and a array of subsections each with a subtitle field with number like 1.1 etc. and array of points field,also ensure that most points start with surrounded like \"**cost**:\" to indicate bold text";
+    private String query2=" consider pagewise word document,in detail and do not start with created by etc.,return in an easily parseable json format,with pagewise distinction but detailed content,also break a page into subsections for better clarity, at highest level name of the project i.e title field etc. then a json array of pages , within each page should be a title field which should contain topic number not page number and a array of subsections each with a subtitle field with number like 1.1 etc. and array of points field,also ensure that most points start with surrounded like \"**cost**:\" to indicate bold text,do not _ between words use proper space";
 
     private String query3="also include pages/topics like: ";
     private String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={API_KEY}";

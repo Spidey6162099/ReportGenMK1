@@ -1,7 +1,9 @@
 package com.example.reportgeneratormk1.Services;
 
 import com.example.reportgeneratormk1.Interfaces.WordMaker;
+import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTabJc;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -13,6 +15,37 @@ public class WordMakerImpl implements WordMaker {
     @Override
     public ByteArrayInputStream saveFile(Map<String,Object> jsonObj) {
         XWPFDocument document = new XWPFDocument();
+
+        XWPFHeader xwpfHeader=document.createHeader(HeaderFooterType.DEFAULT);
+
+        var headerPara=xwpfHeader.createParagraph();
+//        headerPara.getCTP().getPPr().addNewTabs()
+//                .addNewTab()
+//                .setVal(STTabJc.RIGHT);
+
+
+        headerPara.setAlignment(ParagraphAlignment.BOTH);
+        var headerRun1=headerPara.createRun();
+        headerRun1.setFontSize(12);
+        headerRun1.setFontFamily("Times New Roman");
+        headerRun1.setText("Title");
+        headerRun1.addTab();
+
+        var headerRun2=headerPara.createRun();
+        headerRun2.setFontSize(12);
+        headerRun2.setFontFamily("Times New Roman");
+        headerRun2.setText("Report Date");
+
+
+        XWPFFooter xwpfFooter=document.createFooter(HeaderFooterType.DEFAULT);
+
+        var footerPara=xwpfFooter.createParagraph();
+        footerPara.setAlignment(ParagraphAlignment.RIGHT);
+        footerPara.getCTP().addNewFldSimple().setInstr("PAGE");
+        var footerRun=footerPara.createRun();
+        footerRun.setFontFamily("Times New Roman");
+//        footerRun.setText("Page Num");
+        footerRun.setFontSize(12);
 
         //parse the object given and do the "needful"
         //start directly the introduction is separate in most reports and generic
@@ -44,12 +77,14 @@ public class WordMakerImpl implements WordMaker {
                 subTitleRun.setText((String) subsection.get("subtitle"));
                 subTitleRun.setFontSize(14);
                 subTitleRun.setFontFamily("Times New Roman");
-                subTitleRun.addBreak();
                 subTitleRun.setUnderline(UnderlinePatterns.SINGLE);
                 subTitleRun.setBold(true);
+
                 //add the points
                 List<String> points=(List<String>)subsection.get("points");
+                int count=0;
                 for(var point:points){
+                    count++;
                     //extract the bold things from points if present
                     XWPFParagraph pointPara=document.createParagraph();
                     pointPara.setAlignment(ParagraphAlignment.LEFT);
@@ -103,18 +138,28 @@ public class WordMakerImpl implements WordMaker {
 
 
                         stringBuilder.setLength(0);
+//                        pointRun.addBreak();
+                    }
+                    if(count==points.size()){
+                        XWPFRun pointRun=pointPara.createRun();
                         pointRun.addBreak();
                     }
+
 
 
 //                    XWPFRun pointRun=pointPara.createRun();
 //                    pointRun.setText(point);
 //                    pointRun.setFontSize(12);
 //                    pointRun.setFontFamily("Times New Roman");
-//                    pointRun.addBreak();
+
+
+
                 }
             }
             heading.setPageBreak(true);
+            //add headers
+
+
         }
 
 
