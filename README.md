@@ -1,7 +1,7 @@
 Report Generator project for colleges
 
 
-### 🧾 Query Parameters
+### Query Parameters
 
 | Parameter      | Type   | Description                                    |
 |----------------|--------|------------------------------------------------|
@@ -10,7 +10,7 @@ Report Generator project for colleges
 
 ---
 
-### 🧪 Example Request (cURL)
+### Example Request (cURL)
 
 ```bash
-curl "https://reportgenmk1.onrender.com/v1/makePPT?topic=TOPIC&requirements=requirements"
+curl "https://reportgenmk1.onrender.com/v1/makePPT?topic=low requirement ecommerce solution app for rural areas&requirements=system design,purpose,existing solutions,software and hardware requirements,conclusion"
