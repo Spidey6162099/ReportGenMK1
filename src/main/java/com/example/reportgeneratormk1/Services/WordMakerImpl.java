@@ -47,10 +47,61 @@ public class WordMakerImpl implements WordMaker {
 //        footerRun.setText("Page Num");
         footerRun.setFontSize(12);
 
+
+//        XWPFDocument document=new XWPFDocument();
+        //create a table of content table
+
+        XWPFParagraph index = document.createParagraph();
+        index.setAlignment(ParagraphAlignment.CENTER);
+        index.setSpacingBetween(1.5);
+
+        XWPFRun indexRun = index.createRun();
+        indexRun.setText("Table of Contents");
+//            headingRun.setColor("009933");
+        indexRun.setBold(true);
+        indexRun.setFontFamily("Times New Roman");
+        indexRun.setFontSize(16);
+        indexRun.setUnderline(UnderlinePatterns.SINGLE);
+        indexRun.addBreak();
+
+        XWPFTable table=document.createTable();
+        table.setTableAlignment(TableRowAlign.CENTER);
+        table.setCellMargins(0,1000,0,1000);
+
+
+        XWPFTableRow row1=table.getRow(0);
+        XWPFRun run1=row1.getCell(0).addParagraph().createRun();
+        run1.setText("Topic");
+        run1.setFontFamily("Times New Roman");
+        run1.setFontSize(14);
+
+        XWPFRun run2=row1.addNewTableCell().addParagraph().createRun();
+        run2.setText("Pages");
+        run2.setFontFamily("Times New Roman");
+        run2.setFontSize(14);
+
+        List<Map<String,Object>> pages=(List<Map<String,Object>>)jsonObj.get("pages");
+        //parse the list of pages to create the index
+        for(var page:pages){
+            XWPFTableRow row2=table.createRow();
+            XWPFRun run3=row2.getCell(0).addParagraph().createRun();
+            run3.setText((String)page.get("title"));
+            run3.setFontFamily("Times New Roman");
+            run3.setFontSize(12);
+
+            XWPFRun run4=row2.getCell(1).addParagraph().createRun();
+            run4.setText("1-2");
+            run4.setFontFamily("Times New Roman");
+            run4.setFontSize(12);
+        }
+
+        index.setPageBreak(true);
         //parse the object given and do the "needful"
         //start directly the introduction is separate in most reports and generic
         //create heading and center it
-        List<Map<String,Object>> pages=(List<Map<String,Object>>)jsonObj.get("pages");
+
+
+
         for(var page:pages){
             XWPFParagraph heading = document.createParagraph();
             heading.setAlignment(ParagraphAlignment.CENTER);
