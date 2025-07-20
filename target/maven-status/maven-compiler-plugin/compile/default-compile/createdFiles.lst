@@ -1,0 +1,7 @@
+com\example\reportgeneratormk1\Services\CloudinaryService.class
+com\example\reportgeneratormk1\Controllers\MainController.class
+com\example\reportgeneratormk1\Services\WordMakerImpl.class
+com\example\reportgeneratormk1\DummyWordMaker.class
+com\example\reportgeneratormk1\ReportGeneratorMk1Application.class
+com\example\reportgeneratormk1\Interfaces\WordMaker.class
+com\example\reportgeneratormk1\Services\APICaller.class
