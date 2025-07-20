@@ -1,10 +1,13 @@
 package com.example.reportgeneratormk1.Services;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
-import io.github.cdimascio.dotenv.Dotenv;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,9 +18,15 @@ import java.util.UUID;
 @Service
 public class CloudinaryService {
     private Cloudinary cloudinary;
-    public CloudinaryService(){
-        Dotenv dotenv=Dotenv.load();
-        cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
+    @Autowired
+    private Environment environment;
+
+//    @Value("${CLOUDINARY_URL}")
+    private String url;
+    @Autowired
+    public CloudinaryService(@Value("${CLOUDINARY_URL}") String url){
+
+        cloudinary = new Cloudinary(url);
         System.out.println("cloudinary initialized " +cloudinary.config.cloudName);
     }
 
